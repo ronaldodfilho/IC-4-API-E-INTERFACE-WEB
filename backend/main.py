@@ -1,18 +1,20 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from banco import conectar
 
 app = FastAPI()
   
 @app.get("/api/operadoras")
-def listar_operadoras(page: int = 1, limit: int = 10):
+def listar_operadoras(page: int = Query(default=1, ge=1), limit: int = Query(default=10, ge=1, le = 100), busca: str = ""):
     offset = (page - 1) * limit
     conexao = conectar()
     cursor = conexao.cursor(dictionary=True)
     
-    cursor.execute("SELECT * FROM operadoras LIMIT %s OFFSET %s", (limit, offset))
+    termo_busca = f"%{busca}%"
+    
+    cursor.execute("SELECT * FROM operadoras WHERE razao_social LIKE %s OR cnpj LIKE %s ORDER BY razao_social LIMIT %s OFFSET %s", (termo_busca, termo_busca, limit, offset))
     operadoras = cursor.fetchall()
     
-    cursor.execute("SELECT COUNT(*) AS total FROM operadoras;")
+    cursor.execute("SELECT COUNT(*) AS total FROM operadoras WHERE razao_social LIKE %s OR cnpj LIKE %s", (termo_busca, termo_busca))
     resultado = cursor.fetchone()
   
     cursor.close()
