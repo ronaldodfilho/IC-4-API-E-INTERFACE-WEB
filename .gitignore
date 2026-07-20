@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ambientes virtuais
+.venv/
+venv/
+
+# Variáveis de ambiente
+.env
+
+# VS Code
+.vscode/
+
+# Node.js / Vue
+frontend/node_modules/
+frontend/dist/
+
+# Logs
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
