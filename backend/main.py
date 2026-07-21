@@ -120,8 +120,8 @@ def estatisticas():
     conexao.close()
     
     return {
-        "total despesas": estatisticas["total_despesas"],
-        "media despesas": estatisticas["media_despesas"],
+        "total_despesas": estatisticas["total_despesas"],
+        "media_despesas": estatisticas["media_despesas"],
         "top_operadoras": top_operadoras,
         "distribuicao_uf": distribuicao_uf
     }

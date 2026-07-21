@@ -1,7 +1,7 @@
-const URL_BASE = "http://localhost:8000/api"
+const URL_BASE = "http://localhost:8000/api";
 
 export async function listarOperadoras(page = 1, limit = 10, busca = "") {
-  const parametros = new URLSearchParams({page,limit,busca});
+  const parametros = new URLSearchParams({ page, limit, busca });
   const resposta = await fetch(`${URL_BASE}/operadoras?${parametros}`);
 
   if (!resposta.ok) {
@@ -11,12 +11,11 @@ export async function listarOperadoras(page = 1, limit = 10, busca = "") {
   return resposta.json();
 }
 
-
 export async function exibirDetalhesOperadora(cnpj) {
   const resposta = await fetch(`${URL_BASE}/operadoras/${cnpj}`);
 
   if (!resposta.ok) {
-  throw new Error("Erro ao carregar detalhes da operadora");
+    throw new Error("Erro ao carregar detalhes da operadora");
   }
 
   return resposta.json();
@@ -27,6 +26,16 @@ export async function listarDespesas(cnpj) {
 
   if (!resposta.ok) {
     throw new Error("Erro ao carregar despesas da operadora");
+  }
+  return resposta.json();
 }
-    return resposta.json();
+
+export async function exibirEstatisticas() {
+  const resposta = await fetch(`${URL_BASE}/estatisticas`);
+
+  if (!resposta.ok) {
+    throw new Error("Erro ao carregar estatísticas");
+  }
+
+  return resposta.json();
 }
