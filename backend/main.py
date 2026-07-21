@@ -1,7 +1,16 @@
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from banco import conectar
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
   
 @app.get("/api/operadoras")
 def listar_operadoras(page: int = Query(default=1, ge=1), limit: int = Query(default=10, ge=1, le = 100), busca: str = ""):
