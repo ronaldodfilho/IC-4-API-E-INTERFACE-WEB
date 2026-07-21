@@ -35,8 +35,6 @@ onMounted(() => {
   <main>
     <h1>Dashboard</h1>
 
-    <RouterLink to="/operadoras"> Ver operadoras </RouterLink>
-
     <div v-if="estatisticas">
       <p>Total de despesas: {{ formatarMoeda(estatisticas.total_despesas) }}</p>
       <p>Média de despesas: {{ formatarMoeda(estatisticas.media_despesas) }}</p>

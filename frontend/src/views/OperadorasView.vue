@@ -59,7 +59,6 @@ onMounted(async () => {
 <template>
   <main>
     <h1>Operadoras de saúde</h1>
-    <RouterLink to="/"> ← Voltar para o dashboard </RouterLink>
     <div class="pesquisa">
       <input
         v-model="busca"
