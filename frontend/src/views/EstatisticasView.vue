@@ -1,59 +1,161 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { exibirEstatisticas } from "../services/api";
+import { computed, onMounted, ref } from "vue"
+import { exibirEstatisticas } from "../services/api"
+import { Bar } from "vue-chartjs"
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend
+} from "chart.js"
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend
+)
 
 const carregando = ref(true)
-const erro = ref('')
-const estatisticas = ref(null);
+const erro = ref("")
+const estatisticas = ref(null)
 
 async function carregarEstatisticas() {
   carregando.value = true
-  erro.value = ''
+  erro.value = ""
 
   try {
     const resposta = await exibirEstatisticas()
     estatisticas.value = resposta
   } catch (error) {
     console.error(error)
-    erro.value = 'Não foi possível carregar as estatísticas.'
+    erro.value = "Não foi possível carregar as estatísticas."
   } finally {
     carregando.value = false
   }
 }
 
 function formatarMoeda(valor) {
-  return Intl.NumberFormat("pt-BR", {
+  return new Intl.NumberFormat("pt-BR", {
     style: "currency",
-    currency: "BRL",
-  }).format(valor);
+    currency: "BRL"
+  }).format(valor)
 }
 
 function formatarCnpj(cnpj) {
-  const texto = cnpj.toString();
+  const texto = cnpj.toString()
 
   return texto.replace(
     /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
-    "$1.$2.$3/$4-$5",
-  );
+    "$1.$2.$3/$4-$5"
+  )
+}
+
+const dadosGrafico = computed(() => {
+  if (!estatisticas.value) {
+    return {
+      labels: [],
+      datasets: []
+    }
+  }
+
+  return {
+    labels: estatisticas.value.distribuicao_uf.map((item) => item.uf),
+
+    datasets: [
+      {
+        label: "Total de despesas por UF",
+        data: estatisticas.value.distribuicao_uf.map(
+          (item) => Number(item.total_despesas_uf)
+        ),
+        backgroundColor: "#111827",
+        minBarLength: 5
+      }
+    ]
+  }
+})
+
+const opcoesGrafico = {
+  responsive: true,
+  maintainAspectRatio: false,
+
+  plugins: {
+    legend: {
+      display: false
+    },
+
+    tooltip: {
+      callbacks: {
+        label(contexto) {
+          return `Total: ${formatarMoeda(contexto.raw)}`
+        }
+      }
+    }
+  },
+
+  scales: {
+    y: {
+      beginAtZero: true,
+
+      ticks: {
+        callback(valor) {
+          return new Intl.NumberFormat("pt-BR", {
+            notation: "compact"
+          }).format(valor)
+        }
+      }
+    },
+
+    x: {
+      ticks: {
+        autoSkip: false
+      }
+    }
+  }
 }
 
 onMounted(() => {
-  carregarEstatisticas();
-});
+  carregarEstatisticas()
+})
 </script>
 
 <template>
   <main>
     <h1>Dashboard</h1>
 
-    <p v-if="carregando">Carregando estatísticas...</p>
-    <p v-else-if="erro">{{ erro }}</p>
+    <p v-if="carregando" class="mensagem-loading">
+      Carregando estatísticas...
+    </p>
+
+    <p v-else-if="erro" class="mensagem-erro">
+      {{ erro }}
+    </p>
 
     <div v-else-if="estatisticas">
-      <p>Total de despesas: {{ formatarMoeda(estatisticas.total_despesas) }}</p>
-      <p>Média de despesas: {{ formatarMoeda(estatisticas.media_despesas) }}</p>
+      <div class="cards-estatisticas">
+        <div class="card-estatistica">
+          <span>Total de despesas</span>
+
+          <strong>
+            {{ formatarMoeda(estatisticas.total_despesas) }}
+          </strong>
+        </div>
+
+        <div class="card-estatistica">
+          <span>Média de despesas</span>
+
+          <strong>
+            {{ formatarMoeda(estatisticas.media_despesas) }}
+          </strong>
+        </div>
+      </div>
 
       <h3>Top 5 Operadoras por Despesas</h3>
+
       <table>
         <thead>
           <tr>
@@ -73,24 +175,15 @@ onMounted(() => {
       </table>
 
       <h3>Distribuição de Despesas por UF</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>UF</th>
-            <th>Total de Despesas</th>
-            <th>Media de despesas</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="uf in estatisticas.distribuicao_uf" :key="uf.uf">
-            <td>{{ uf.uf }}</td>
-            <td>{{ formatarMoeda(uf.total_despesas_uf) }}</td>
-            <td>{{ formatarMoeda(uf.media_despesas_por_operadora) }}</td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div class="grafico">
+        <Bar :data="dadosGrafico" :options="opcoesGrafico" />
+      </div>
+
     </div>
 
-    <p v-else>Nenhuma estatística encontrada.</p>
+    <p v-else class="mensagem-vazia">
+      Nenhuma estatística encontrada.
+    </p>
   </main>
 </template>
