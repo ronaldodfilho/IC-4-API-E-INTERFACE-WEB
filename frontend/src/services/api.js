@@ -25,8 +25,11 @@ export async function listarDespesas(cnpj) {
   const resposta = await fetch(`${URL_BASE}/operadoras/${cnpj}/despesas`);
 
   if (!resposta.ok) {
-    throw new Error("Erro ao carregar despesas da operadora");
+    const erro = new Error("Erro ao carregar despesas da operadora");
+    erro.status = resposta.status;
+    throw erro;
   }
+
   return resposta.json();
 }
 

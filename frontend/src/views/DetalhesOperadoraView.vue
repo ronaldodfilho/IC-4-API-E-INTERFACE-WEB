@@ -29,20 +29,26 @@ async function carregarDetalhesOperadoras() {
 }
 
 async function carregarDespesas() {
-  const cnpj = route.params.cnpj
+  const cnpj = route.params.cnpj;
 
-  carregandoDespesas.value = true
-  erroDespesas.value = ''
+  carregandoDespesas.value = true;
+  erroDespesas.value = "";
+  despesas.value = [];
 
   try {
-    const resposta = await listarDespesas(cnpj)
-    despesas.value = resposta.data
+    const resposta = await listarDespesas(cnpj);
+    despesas.value = resposta.data;
   } catch (error) {
-    console.error(error)
-    erroDespesas.value = "Não foi possível carregar as despesas."
-    despesas.value = []
+    console.error(error);
+
+    if (error.status === 404) {
+      despesas.value = [];
+      erroDespesas.value = "";
+    } else {
+      erroDespesas.value = "Não foi possível carregar as despesas.";
+    }
   } finally {
-    carregandoDespesas.value = false
+    carregandoDespesas.value = false;
   }
 }
 
