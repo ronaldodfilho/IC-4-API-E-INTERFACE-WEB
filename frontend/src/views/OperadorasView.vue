@@ -4,19 +4,33 @@ import { listarOperadoras } from "../services/api";
 
 const operadoras = ref([]);
 
+const carregando = ref(false)
+const erro = ref('')
 const pagina = ref(1);
 const limite = ref(10);
 const total = ref(0);
 const busca = ref("");
 
 async function carregarOperadoras() {
-  const resposta = await listarOperadoras(
-    pagina.value,
-    limite.value,
-    busca.value,
-  );
-  operadoras.value = resposta.data;
-  total.value = resposta.total;
+  carregando.value = true
+  erro.value = ''
+
+  try {
+    const resposta = await listarOperadoras(
+      pagina.value,
+      limite.value,
+      busca.value
+    )
+
+    operadoras.value = resposta.data
+    total.value = resposta.total
+  } catch (error) {
+    console.error(error)
+    erro.value = 'Não foi possível carregar as operadoras.'
+    operadoras.value = []
+  } finally {
+    carregando.value = false
+  }
 }
 
 function pesquisarOperadoras() {
@@ -59,15 +73,13 @@ onMounted(async () => {
 <template>
   <main>
     <h1>Operadoras de saúde</h1>
+    <p v-if="carregando">Carregando operadoras...</p>
+    <p v-else-if="erro">{{ erro }}</p>
     <div class="pesquisa">
-      <input
-        v-model="busca"
-        @input="pesquisarOperadoras"
-        placeholder="Pesquisar por CNPJ ou Razão Social"
-      />
+      <input v-model="busca" @input="pesquisarOperadoras" placeholder="Pesquisar por CNPJ ou Razão Social" />
       <button @click="pesquisarOperadoras">Pesquisar</button>
     </div>
-    <table>
+    <table v-if="operadoras.length > 0">
       <thead>
         <tr>
           <th>CNPJ</th>
@@ -85,22 +97,24 @@ onMounted(async () => {
           <td>{{ operadora.uf }}</td>
           <td>{{ operadora.modalidade }}</td>
           <td>
-            <RouterLink
-              :to="{
-                name: 'detalhes-operadora',
-                params: { cnpj: operadora.cnpj },
-              }"
-            >
+            <RouterLink :to="{
+              name: 'detalhes-operadora',
+              params: { cnpj: operadora.cnpj },
+            }">
               Ver detalhes
             </RouterLink>
           </td>
         </tr>
       </tbody>
     </table>
+    <p v-else>Nenhuma operadora encontrada.</p>
     <p>página: {{ pagina }} de {{ totalPaginas }}</p>
-    <div class="paginacao">
-      <button @click="paginaAnterior" :disabled="pagina === 1">Anterior</button>
-      <button @click="proximaPagina" :disabled="pagina * limite >= total">
+    <div v-if="!carregando && !erro && operadoras.length > 0" class="paginacao">
+      <button @click="paginaAnterior" :disabled="pagina === 1 || carregando">
+        Anterior
+      </button>
+
+      <button @click="proximaPagina" :disabled="pagina * limite >= total || carregando">
         Próxima
       </button>
     </div>

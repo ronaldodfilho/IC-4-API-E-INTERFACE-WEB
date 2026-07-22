@@ -2,12 +2,23 @@
 import { onMounted, ref } from "vue";
 import { exibirEstatisticas } from "../services/api";
 
+const carregando = ref(true)
+const erro = ref('')
 const estatisticas = ref(null);
 
 async function carregarEstatisticas() {
-  const resposta = await exibirEstatisticas();
+  carregando.value = true
+  erro.value = ''
 
-  estatisticas.value = resposta;
+  try {
+    const resposta = await exibirEstatisticas()
+    estatisticas.value = resposta
+  } catch (error) {
+    console.error(error)
+    erro.value = 'Não foi possível carregar as estatísticas.'
+  } finally {
+    carregando.value = false
+  }
 }
 
 function formatarMoeda(valor) {
@@ -35,7 +46,10 @@ onMounted(() => {
   <main>
     <h1>Dashboard</h1>
 
-    <div v-if="estatisticas">
+    <p v-if="carregando">Carregando estatísticas...</p>
+    <p v-else-if="erro">{{ erro }}</p>
+
+    <div v-else-if="estatisticas">
       <p>Total de despesas: {{ formatarMoeda(estatisticas.total_despesas) }}</p>
       <p>Média de despesas: {{ formatarMoeda(estatisticas.media_despesas) }}</p>
 
@@ -50,10 +64,7 @@ onMounted(() => {
         </thead>
 
         <tbody>
-          <tr
-            v-for="operadora in estatisticas.top_operadoras"
-            :key="operadora.cnpj"
-          >
+          <tr v-for="operadora in estatisticas.top_operadoras" :key="operadora.cnpj">
             <td>{{ formatarCnpj(operadora.cnpj) }}</td>
             <td>{{ operadora.razao_social }}</td>
             <td>{{ formatarMoeda(operadora.total_despesas) }}</td>
@@ -80,6 +91,6 @@ onMounted(() => {
       </table>
     </div>
 
-    <p v-else>Carregando estatísticas...</p>
+    <p v-else>Nenhuma estatística encontrada.</p>
   </main>
 </template>

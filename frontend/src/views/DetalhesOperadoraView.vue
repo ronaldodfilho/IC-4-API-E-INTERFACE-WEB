@@ -6,22 +6,47 @@ import { exibirDetalhesOperadora, listarDespesas } from "../services/api";
 const route = useRoute();
 const operadora = ref(null);
 const despesas = ref([]);
+const carregandoOperadora = ref(true)
+const carregandoDespesas = ref(true)
+const erroOperadora = ref('')
+const erroDespesas = ref('')
 
 async function carregarDetalhesOperadoras() {
-  const cnpj = route.params.cnpj;
-  const resposta = await exibirDetalhesOperadora(cnpj);
+  const cnpj = route.params.cnpj
 
-  operadora.value = resposta.data;
+  carregandoOperadora.value = true
+  erroOperadora.value = ''
+
+  try {
+    const resposta = await exibirDetalhesOperadora(cnpj)
+    operadora.value = resposta.data
+  } catch (error) {
+    console.error(error)
+    erroOperadora.value = 'Não foi possível carregar os dados da operadora.'
+  } finally {
+    carregandoOperadora.value = false
+  }
 }
 
 async function carregarDespesas() {
-  const cnpj = route.params.cnpj;
+  const cnpj = route.params.cnpj
+
+  carregandoDespesas.value = true
+  erroDespesas.value = ''
 
   try {
-    const resposta = await listarDespesas(cnpj);
-    despesas.value = resposta.data;
+    const resposta = await listarDespesas(cnpj)
+    despesas.value = resposta.data
+  } catch (error) {
+    console.error(error)
+
+    if (error.message.includes('404')) {
+      despesas.value = []
+    } else {
+      erroDespesas.value = 'Não foi possível carregar as despesas.'
+    }
   } finally {
-    carregandoDespesas.value = false;
+    carregandoDespesas.value = false
   }
 }
 
@@ -50,6 +75,14 @@ onMounted(() => {
 <template>
   <main>
     <RouterLink to="/operadoras"> ← Voltar para a lista </RouterLink>
+
+    <p v-if="carregandoOperadora">
+  Carregando dados da operadora...
+</p>
+
+<p v-else-if="erroOperadora">
+  {{ erroOperadora }}
+</p>
 
     <h1>Detalhes da Operadora</h1>
 
