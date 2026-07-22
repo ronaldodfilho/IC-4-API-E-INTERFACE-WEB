@@ -1,0 +1,478 @@
+{
+  "info": {
+    "_postman_id": "02fcae5f-3e4a-4648-a8d6-4a862db38ee3",
+    "name": "API de Operadoras - Intuitive Care",
+    "description": "Coleção com as rotas desenvolvidas no Teste 4 para consulta de operadoras, despesas e estatísticas.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55840407",
+    "_collection_link": "https://go.postman.co/collection/55840407-02fcae5f-3e4a-4648-a8d6-4a862db38ee3?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Listar operadoras",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/operadoras?page=1&limit=10",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "operadoras"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            }
+          ]
+        },
+        "description": "Retorna as operadoras de forma paginada. Aceita os parâmetros page, limit e busca."
+      },
+      "response": [
+        {
+          "name": "Resposta com sucesso",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/operadoras?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "operadoras"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "date",
+              "value": "Wed, 22 Jul 2026 15:10:39 GMT"
+            },
+            {
+              "key": "server",
+              "value": "uvicorn"
+            },
+            {
+              "key": "content-length",
+              "value": "1765"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"registro_ans\": \"419761\",\n            \"cnpj\": \"19541931000125\",\n            \"razao_social\": \"18 DE JULHO ADMINISTRADORA DE BENEFÍCIOS LTDA\",\n            \"modalidade\": \"Administradora de Benefícios\",\n            \"uf\": \"MG\"\n        },\n        {\n            \"id\": 2,\n            \"registro_ans\": \"421545\",\n            \"cnpj\": \"22869997000153\",\n            \"razao_social\": \"2B ODONTOLOGIA OPERADORA DE PLANOS ODONTOLÓGICOS LTDA\",\n            \"modalidade\": \"Odontologia de Grupo\",\n            \"uf\": \"SP\"\n        },\n        {\n            \"id\": 3,\n            \"registro_ans\": \"421421\",\n            \"cnpj\": \"27452545000195\",\n            \"razao_social\": \"2CARE OPERADORA DE SAÚDE LTDA.\",\n            \"modalidade\": \"Medicina de Grupo\",\n            \"uf\": \"SP\"\n        },\n        {\n            \"id\": 4,\n            \"registro_ans\": \"418030\",\n            \"cnpj\": \"13138885000131\",\n            \"razao_social\": \"A.P.S. ADMINISTRADORA DE BENEFÍCOS LTDA.\",\n            \"modalidade\": \"Administradora de Benefícios\",\n            \"uf\": \"SP\"\n        },\n        {\n            \"id\": 5,\n            \"registro_ans\": \"314668\",\n            \"cnpj\": \"17505793000101\",\n            \"razao_social\": \"ABERTTA SAÚDE - ASSOCIAÇÃO BENEFICENTE DOS EMPREGADOS DA ARCELORMITTAL NO BRASIL\",\n            \"modalidade\": \"Autogestão\",\n            \"uf\": \"MG\"\n        },\n        {\n            \"id\": 6,\n            \"registro_ans\": \"419621\",\n            \"cnpj\": \"17687511000126\",\n            \"razao_social\": \"ABPLUS ADMINISTRADORA DE BENEFÍCIOS LTDA.\",\n            \"modalidade\": \"Administradora de Benefícios\",\n            \"uf\": \"RJ\"\n        },\n        {\n            \"id\": 7,\n            \"registro_ans\": \"418901\",\n            \"cnpj\": \"10458298000131\",\n            \"razao_social\": \"AD SALUTE ADMINISTRADORA DE BENEFÍCIOS LTDA\",\n            \"modalidade\": \"Administradora de Benefícios\",\n            \"uf\": \"RJ\"\n        },\n        {\n            \"id\": 8,\n            \"registro_ans\": \"424293\",\n            \"cnpj\": \"58280182000181\",\n            \"razao_social\": \"ADC ADMINISTRADORA DE BENEFICIOS LTDA\",\n            \"modalidade\": \"Administradora de Benefícios\",\n            \"uf\": \"SP\"\n        },\n        {\n            \"id\": 9,\n            \"registro_ans\": \"421553\",\n            \"cnpj\": \"28315826000169\",\n            \"razao_social\": \"ADM LIFE - ADMINISTRADORA DE BENEFÍCIOS LTDA.\",\n            \"modalidade\": \"Administradora de Benefícios\",\n            \"uf\": \"SP\"\n        },\n        {\n            \"id\": 10,\n            \"registro_ans\": \"416932\",\n            \"cnpj\": \"07867825000157\",\n            \"razao_social\": \"ADMSERV BENEFÍCIOS E SERVIÇOS LTDA\",\n            \"modalidade\": \"Administradora de Benefícios\",\n            \"uf\": \"SP\"\n        }\n    ],\n    \"total\": 1114,\n    \"page\": 1,\n    \"limit\": 10\n}"
+        }
+      ]
+    },
+    {
+      "name": "Buscar operadoras",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/operadoras?page=1&limit=10&busca=15011651000154",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "operadoras"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "busca",
+              "value": "15011651000154"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Resposta com sucesso",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/operadoras?page=1&limit=10&busca=15011651000154",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "operadoras"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "busca",
+                  "value": "15011651000154"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "date",
+              "value": "Wed, 22 Jul 2026 15:12:15 GMT"
+            },
+            {
+              "key": "server",
+              "value": "uvicorn"
+            },
+            {
+              "key": "content-length",
+              "value": "202"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"data\": [\n        {\n            \"id\": 167,\n            \"registro_ans\": \"421715\",\n            \"cnpj\": \"15011651000154\",\n            \"razao_social\": \"BRADESCO SAÚDE - OPERADORA DE PLANOS  S/A\",\n            \"modalidade\": \"Medicina de Grupo\",\n            \"uf\": \"SP\"\n        }\n    ],\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10\n}"
+        }
+      ]
+    },
+    {
+      "name": "Detalhar operadora",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/operadoras/15011651000154",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "operadoras",
+            "15011651000154"
+          ]
+        },
+        "description": "Retorna os dados de uma operadora específica utilizando o CNPJ."
+      },
+      "response": [
+        {
+          "name": "Resposta com sucesso",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/operadoras/15011651000154",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "operadoras",
+                "15011651000154"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "date",
+              "value": "Wed, 22 Jul 2026 15:12:55 GMT"
+            },
+            {
+              "key": "server",
+              "value": "uvicorn"
+            },
+            {
+              "key": "content-length",
+              "value": "170"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"data\": {\n        \"id\": 167,\n        \"registro_ans\": \"421715\",\n        \"cnpj\": \"15011651000154\",\n        \"razao_social\": \"BRADESCO SAÚDE - OPERADORA DE PLANOS  S/A\",\n        \"modalidade\": \"Medicina de Grupo\",\n        \"uf\": \"SP\"\n    }\n}"
+        },
+        {
+          "name": "Resposta não encontrada",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/operadoras/15011651000152",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "operadoras",
+                "15011651000152"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "date",
+              "value": "Wed, 22 Jul 2026 15:17:09 GMT"
+            },
+            {
+              "key": "server",
+              "value": "uvicorn"
+            },
+            {
+              "key": "content-length",
+              "value": "38"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"detail\": \"Operadora não encontrada\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Listar despesas da operadora",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/operadoras/15011651000154/despesas",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "operadoras",
+            "15011651000154",
+            "despesas"
+          ]
+        },
+        "description": "Retorna o histórico trimestral de despesas da operadora informada."
+      },
+      "response": [
+        {
+          "name": "Resposta com sucesso",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/operadoras/15011651000154/despesas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "operadoras",
+                "15011651000154",
+                "despesas"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "date",
+              "value": "Wed, 22 Jul 2026 15:13:49 GMT"
+            },
+            {
+              "key": "server",
+              "value": "uvicorn"
+            },
+            {
+              "key": "content-length",
+              "value": "436"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"data\": [\n        {\n            \"cnpj\": \"15011651000154\",\n            \"razao_social\": \"BRADESCO SAÚDE - OPERADORA DE PLANOS  S/A\",\n            \"ano\": 2026,\n            \"trimestre\": 1,\n            \"valor_despesas\": 1582958456.44\n        },\n        {\n            \"cnpj\": \"15011651000154\",\n            \"razao_social\": \"BRADESCO SAÚDE - OPERADORA DE PLANOS  S/A\",\n            \"ano\": 2025,\n            \"trimestre\": 4,\n            \"valor_despesas\": 6323489685.75\n        },\n        {\n            \"cnpj\": \"15011651000154\",\n            \"razao_social\": \"BRADESCO SAÚDE - OPERADORA DE PLANOS  S/A\",\n            \"ano\": 2025,\n            \"trimestre\": 3,\n            \"valor_despesas\": 4617448541.33\n        }\n    ]\n}"
+        },
+        {
+          "name": "Resposta não encontrada",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/operadoras/15011651000152/despesas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "operadoras",
+                "15011651000152",
+                "despesas"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "date",
+              "value": "Wed, 22 Jul 2026 15:18:08 GMT"
+            },
+            {
+              "key": "server",
+              "value": "uvicorn"
+            },
+            {
+              "key": "content-length",
+              "value": "55"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"detail\": \"Despesas não encontradas para a operadora\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Consultar estatísticas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/estatisticas",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "estatisticas"
+          ]
+        },
+        "description": "Retorna total e média de despesas, top 5 operadoras e distribuição de despesas por UF."
+      },
+      "response": [
+        {
+          "name": "Resposta com sucesso",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/estatisticas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "estatisticas"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "date",
+              "value": "Wed, 22 Jul 2026 15:14:58 GMT"
+            },
+            {
+              "key": "server",
+              "value": "uvicorn"
+            },
+            {
+              "key": "content-length",
+              "value": "3122"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"total_despesas\": 3507346773624.54,\n    \"media_despesas\": 1587753179.549362,\n    \"top_operadoras\": [\n        {\n            \"cnpj\": \"92693118000160\",\n            \"razao_social\": \"BRADESCO SAÚDE S.A.\",\n            \"total_despesas\": 426220771547.66\n        },\n        {\n            \"cnpj\": \"01685053000156\",\n            \"razao_social\": \"SUL AMERICA COMPANHIA DE SEGURO SAÚDE\",\n            \"total_despesas\": 285574647543.13\n        },\n        {\n            \"cnpj\": \"29309127000179\",\n            \"razao_social\": \"AMIL ASSISTÊNCIA MÉDICA INTERNACIONAL S.A.\",\n            \"total_despesas\": 271408952112.4\n        },\n        {\n            \"cnpj\": \"63554067000198\",\n            \"razao_social\": \"HAPVIDA ASSISTENCIA MEDICA S.A.\",\n            \"total_despesas\": 127911682418.11\n        },\n        {\n            \"cnpj\": \"44649812000138\",\n            \"razao_social\": \"NOTRE DAME INTERMÉDICA SAÚDE S.A.\",\n            \"total_despesas\": 123967547644.3\n        }\n    ],\n    \"distribuicao_uf\": [\n        {\n            \"uf\": \"SP\",\n            \"total_despesas_uf\": 1262719874370.91,\n            \"media_despesas_por_operadora\": 4280406353.8\n        },\n        {\n            \"uf\": \"RJ\",\n            \"total_despesas_uf\": 866449597202.2,\n            \"media_despesas_por_operadora\": 12741905841.21\n        },\n        {\n            \"uf\": \"MG\",\n            \"total_despesas_uf\": 214225525869.37,\n            \"media_despesas_por_operadora\": 1965371796.97\n        },\n        {\n            \"uf\": \"CE\",\n            \"total_despesas_uf\": 202431862738.08,\n            \"media_despesas_por_operadora\": 11907756631.65\n        },\n        {\n            \"uf\": \"DF\",\n            \"total_despesas_uf\": 197746885168.03,\n            \"media_despesas_por_operadora\": 12359180323\n        },\n        {\n            \"uf\": \"PR\",\n            \"total_despesas_uf\": 181445471737.81,\n            \"media_despesas_por_operadora\": 3860541951.87\n        },\n        {\n            \"uf\": \"RS\",\n            \"total_despesas_uf\": 125382830650.5,\n            \"media_despesas_por_operadora\": 2365713785.86\n        },\n        {\n            \"uf\": \"SC\",\n            \"total_despesas_uf\": 79023367822.02,\n            \"media_despesas_por_operadora\": 2549140897.48\n        },\n        {\n            \"uf\": \"GO\",\n            \"total_despesas_uf\": 75890957308.67,\n            \"media_despesas_por_operadora\": 3035638292.35\n        },\n        {\n            \"uf\": \"ES\",\n            \"total_despesas_uf\": 68437690494.69,\n            \"media_despesas_por_operadora\": 3601983710.25\n        },\n        {\n            \"uf\": \"PE\",\n            \"total_despesas_uf\": 33994333542.51,\n            \"media_despesas_por_operadora\": 1999666678.97\n        },\n        {\n            \"uf\": \"MT\",\n            \"total_despesas_uf\": 30425004929.82,\n            \"media_despesas_por_operadora\": 3380556103.31\n        },\n        {\n            \"uf\": \"MS\",\n            \"total_despesas_uf\": 27347132332.52,\n            \"media_despesas_por_operadora\": 2486102939.32\n        },\n        {\n            \"uf\": \"PA\",\n            \"total_despesas_uf\": 23873202205.63,\n            \"media_despesas_por_operadora\": 2387320220.56\n        },\n        {\n            \"uf\": \"PI\",\n            \"total_despesas_uf\": 20621079669.7,\n            \"media_despesas_por_operadora\": 4124215933.94\n        },\n        {\n            \"uf\": \"PB\",\n            \"total_despesas_uf\": 18744763672.72,\n            \"media_despesas_por_operadora\": 1338911690.91\n        },\n        {\n            \"uf\": \"BA\",\n            \"total_despesas_uf\": 16940463010.6,\n            \"media_despesas_por_operadora\": 584153896.92\n        },\n        {\n            \"uf\": \"AL\",\n            \"total_despesas_uf\": 15683191663.72,\n            \"media_despesas_por_operadora\": 1425744696.7\n        },\n        {\n            \"uf\": \"RN\",\n            \"total_despesas_uf\": 15428168815.04,\n            \"media_despesas_por_operadora\": 1714240979.45\n        },\n        {\n            \"uf\": \"SE\",\n            \"total_despesas_uf\": 9024773513.12,\n            \"media_despesas_por_operadora\": 902477351.31\n        },\n        {\n            \"uf\": \"RO\",\n            \"total_despesas_uf\": 7307571786.74,\n            \"media_despesas_por_operadora\": 1043938826.68\n        },\n        {\n            \"uf\": \"AM\",\n            \"total_despesas_uf\": 6258141484.45,\n            \"media_despesas_por_operadora\": 1043023580.74\n        },\n        {\n            \"uf\": \"TO\",\n            \"total_despesas_uf\": 2998396410.29,\n            \"media_despesas_por_operadora\": 749599102.57\n        },\n        {\n            \"uf\": \"MA\",\n            \"total_despesas_uf\": 2521847191.21,\n            \"media_despesas_por_operadora\": 630461797.8\n        },\n        {\n            \"uf\": \"AC\",\n            \"total_despesas_uf\": 2366657298.1,\n            \"media_despesas_por_operadora\": 1183328649.05\n        },\n        {\n            \"uf\": \"AP\",\n            \"total_despesas_uf\": 57131564.93,\n            \"media_despesas_por_operadora\": 57131564.93\n        },\n        {\n            \"uf\": \"RR\",\n            \"total_despesas_uf\": 851171.16,\n            \"media_despesas_por_operadora\": 851171.16\n        }\n    ]\n}"
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    }
+  ]
+}

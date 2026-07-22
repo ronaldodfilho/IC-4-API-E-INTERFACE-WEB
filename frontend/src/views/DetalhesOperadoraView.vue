@@ -39,12 +39,8 @@ async function carregarDespesas() {
     despesas.value = resposta.data
   } catch (error) {
     console.error(error)
-
-    if (error.message.includes('404')) {
-      despesas.value = []
-    } else {
-      erroDespesas.value = 'Não foi possível carregar as despesas.'
-    }
+    erroDespesas.value = "Não foi possível carregar as despesas."
+    despesas.value = []
   } finally {
     carregandoDespesas.value = false
   }
@@ -82,6 +78,10 @@ onMounted(() => {
 
 <p v-else-if="erroOperadora">
   {{ erroOperadora }}
+</p>
+
+<p v-else-if="erroDespesas" class="mensagem-erro">
+  {{ erroDespesas }}
 </p>
 
     <h1>Detalhes da Operadora</h1>

@@ -4,32 +4,32 @@ import { listarOperadoras } from "../services/api";
 
 const operadoras = ref([]);
 
-const carregando = ref(false)
-const erro = ref('')
+const carregando = ref(false);
+const erro = ref("");
 const pagina = ref(1);
 const limite = ref(10);
 const total = ref(0);
 const busca = ref("");
 
 async function carregarOperadoras() {
-  carregando.value = true
-  erro.value = ''
+  carregando.value = true;
+  erro.value = "";
 
   try {
     const resposta = await listarOperadoras(
       pagina.value,
       limite.value,
-      busca.value
-    )
+      busca.value,
+    );
 
-    operadoras.value = resposta.data
-    total.value = resposta.total
+    operadoras.value = resposta.data;
+    total.value = resposta.total;
   } catch (error) {
-    console.error(error)
-    erro.value = 'Não foi possível carregar as operadoras.'
-    operadoras.value = []
+    console.error(error);
+    erro.value = "Não foi possível carregar as operadoras.";
+    operadoras.value = [];
   } finally {
-    carregando.value = false
+    carregando.value = false;
   }
 }
 
@@ -79,7 +79,7 @@ onMounted(async () => {
       <input v-model="busca" @input="pesquisarOperadoras" placeholder="Pesquisar por CNPJ ou Razão Social" />
       <button @click="pesquisarOperadoras">Pesquisar</button>
     </div>
-    <table v-if="operadoras.length > 0">
+    <table v-if="!carregando && !erro && operadoras.length > 0">
       <thead>
         <tr>
           <th>CNPJ</th>
@@ -107,7 +107,9 @@ onMounted(async () => {
         </tr>
       </tbody>
     </table>
-    <p v-else>Nenhuma operadora encontrada.</p>
+    <p v-else-if="!carregando && !erro && operadoras.length === 0" class="mensagem-vazia">
+      Nenhuma operadora encontrada.
+    </p>
     <p>página: {{ pagina }} de {{ totalPaginas }}</p>
     <div v-if="!carregando && !erro && operadoras.length > 0" class="paginacao">
       <button @click="paginaAnterior" :disabled="pagina === 1 || carregando">
